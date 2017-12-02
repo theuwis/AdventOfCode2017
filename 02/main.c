@@ -1,0 +1,39 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+int main(void){
+	long answer = 0;
+	int small_nr = 99999, large_nr = 0, curr_number_int = 0;
+
+	FILE * fp_data;
+	fp_data = fopen("data", "r");
+
+	char * data_read = NULL, * curr_number;
+	size_t len = 0;
+	ssize_t read;
+
+	while((read = getline(&data_read, &len, fp_data)) != -1){
+		// go through all the numbers in each row
+		curr_number = strtok(data_read, "\t");
+		while(curr_number != NULL){
+			curr_number_int = atoi(curr_number);
+			
+			// check if it is the new lowest or highest number in the row
+			if(curr_number_int < small_nr){
+				small_nr = curr_number_int;
+			}
+			if(curr_number_int > large_nr){
+				large_nr = curr_number_int;
+			}
+			curr_number = strtok(NULL, "\t");
+		}
+
+		answer += (large_nr - small_nr);
+		small_nr = 99999;
+		large_nr = 0;
+	}
+
+	printf("answer=%ld\n", answer);
+	return EXIT_SUCCESS;
+}
