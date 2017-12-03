@@ -9,7 +9,10 @@ int main(void){
 	int numbers[NR_OF_COLS], numbers_index = 0;
 
 	FILE * fp_data;
-	fp_data = fopen("data", "r");
+	if(!(fp_data = fopen("data", "r"))){
+		fprintf(stderr, "Error opening file\n");
+		return EXIT_FAILURE;
+	}
 
 	char * data_read = NULL, * curr_number;
 	size_t len = 0;
@@ -43,5 +46,9 @@ int main(void){
 	}
 
 	printf("answer=%ld\n", answer);
+
+	free(data_read);
+	free(curr_number);
+	fclose(fp_data);
 	return EXIT_SUCCESS;
 }

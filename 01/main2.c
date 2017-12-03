@@ -3,7 +3,12 @@
 #include <string.h>
 
 int main(void){
-	FILE *fp = fopen("data", "r");	// contains input data
+	FILE *fp;
+	if(!(fp = fopen("data", "r"))){
+		fprintf(stderr, "Error opening file\n");
+		return EXIT_FAILURE;
+	}
+
 	char current_char, compare_char;	// stores each number from the input data
 	long answer = 0;						// stores the final answer
 	int current_char_index = 0;		
@@ -37,5 +42,7 @@ int main(void){
 	}
 
 	printf("answer=%ld\n", answer);
+
+	fclose(fp);
 	return EXIT_SUCCESS;
 }

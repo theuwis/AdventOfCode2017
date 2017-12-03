@@ -7,7 +7,10 @@ int main(void){
 	int small_nr = 99999, large_nr = 0, curr_number_int = 0;
 
 	FILE * fp_data;
-	fp_data = fopen("data", "r");
+	if(!(fp_data = fopen("data", "r"))){
+		fprintf(stderr, "Error opening file\n");
+		return EXIT_FAILURE;
+	}
 
 	char * data_read = NULL, * curr_number;
 	size_t len = 0;
@@ -35,5 +38,9 @@ int main(void){
 	}
 
 	printf("answer=%ld\n", answer);
+
+	free(data_read);
+	free(curr_number);
+	fclose(fp_data);
 	return EXIT_SUCCESS;
 }
